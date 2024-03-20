@@ -1,4 +1,8 @@
-import { Injectable } from "@nestjs/common";
+import {
+    ConflictException,
+    Injectable,
+    NotFoundException,
+} from "@nestjs/common";
 import { PrismaService } from "../../infrastructure/prisma/prisma.service";
 import { Article, MutableArticle } from "./article.entity";
 import { validateUserCanMutateArticle } from "./rules";
@@ -52,6 +56,20 @@ export class ArticlesService {
     findOne = (id: number) => {
         return this.prisma.article.findUnique({ where: { id } });
     };
+
+    async isArticlePublished(articleId: number): Promise<Article> {
+        const article = await this.findOne(articleId);
+
+        if (!article) {
+            throw new NotFoundException("Article not found");
+        }
+
+        if (!article.published) {
+            throw new ConflictException("Article is not published");
+        }
+
+        return article;
+    }
 
     update = async (
         id: number,
