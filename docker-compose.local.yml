@@ -1,0 +1,37 @@
+version: "3.8"
+services:
+    database:
+        container_name: database
+        image: "postgres:13.5"
+        restart: always
+        environment:
+            - POSTGRES_USER=app
+            - POSTGRES_PASSWORD=d!@O9p7.4Fg2a
+        volumes:
+            - "./database:/var/lib/postgresql/data"
+        ports:
+            - "5432:5432"
+
+    backend:
+        image: backend-api
+        container_name: backend-api
+        build:
+            context: .
+            dockerfile: Dockerfile.local
+            cache_from:
+                - backend-api
+        depends_on:
+            - database
+        links:
+            - database
+        working_dir: /app
+        ports:
+            - "3000:3000"
+        volumes:
+            - ".:/app"
+            - /app/node_modules
+            - "./nodemon.json:/home/node/app/nodemon.json"
+        command: yarn run api:local
+
+volumes:
+    database:

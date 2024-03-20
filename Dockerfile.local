@@ -1,0 +1,14 @@
+FROM node:18-alpine as builder
+
+WORKDIR /app
+RUN npm install -g nodemon
+RUN npm install -g prisma
+
+COPY "./package.json" "./yarn.lock" /app/
+COPY "./.env" /app/.env
+
+RUN yarn 
+
+COPY . .
+
+RUN prisma generate
