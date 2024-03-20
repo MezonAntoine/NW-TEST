@@ -3,7 +3,7 @@
 This repository aims to emulate a blog post application. It is imperfect on purpose, we'd like your comments on it !<br/>
 Please see the exercise as if you joined a team that created this repository, which is now used like this in production. What would you do with it ?<br/>
 <br/>
-We would advise spending between 120 and 240 minutes on this exercise, and try answering the following questions:<br/>
+We would advise spending between 120 and 240 minutes on this exercise, and try answering the following questions: <br/>
 -What good practices do you see that you would reuse on other NestJS projects ?<br/>
 -What would you refactor in the code to improve its **quality** ?<br/>
 -What would you bring to improve the **CI/CD** (in order to reduce the number of bugs in prod) ?<br/>
@@ -22,49 +22,21 @@ We would advise spending between 120 and 240 minutes on this exercise, and try a
 # Install
 
 ```shell
-npm install
+yarn
 ```
 
-## Prisma & DB
+# Run Project
 
-### database
-
-To start the database, you can use docker
+Run project and database
 
 ```shell
-docker compose up database
+yarn run project:local
 ```
 
-### migrations
-
-Apply migrations to the database with the following command
+Run migration and seed
 
 ```shell
-npm run migrate
-```
-
-### seed
-
-You can then populate the database with the seeds we created !
-
-```shell
-npm run seed
-```
-
-# Run
-
-Once you have setup the database and applied the migrations
-
-### Node
-
-```shell
-npm run start
-```
-
-### Docker
-
-```shell
-docker compose up
+yarn run migrate:local
 ```
 
 ## Login
@@ -76,27 +48,22 @@ and then use the `accessToken` provided as a Bearer Token. With swagger you can 
 
 ```shell
 # unit tests
-npm run test
+yarn run test
 
 # e2e tests
-npm run test:e2e
+yarn run test:e2e
 ```
 
-# Prisma
+## API Reference
 
-### Generate new migrations
+#### open http://localhost:3000/api for test api routes with swagger
 
-When changing the data model you should run the following command to generate and apply the associated migration
+## Tech Stack
 
-```shell
-npm run migrate -- --name "<NAME>"
-```
+**Back-end:** Docker - Jest- Postgres - Prisma - TS
 
-# GitFlow
 
-The `main` branch is protected. A Merge request has to be approved before it is merged into main. It is then automatically deployed with our CI/CD.
-We build the image of the application on a registry. From there, a Portainer service receives a notification and deploys the new version of the image.
+## Author
 
-# Drone
+- [@AntoineMezon](https://github.com/MezonAntoine)
 
-We use drone for our CI/CD. We have two pipelines, one running at every new commit on a `pull_request`, and one whenever there is a push on `main` branch
