@@ -17,6 +17,7 @@ model User {
   followedBy  User[]    @relation("UserFollows")
   following   User[]    @relation("UserFollows")
   articles    Article[]
+  comments  Comment[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
@@ -28,7 +29,23 @@ model Article {
   title       String   @unique
   description String?
   body        String
+  comments  Comment[]
   published   Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+
+model Comment {
+  id          Int       @id @default(autoincrement())
+  authorId    Int
+  author      User      @relation(fields: [authorId], references: [id])  
+  articleId   Int
+  article     Article   @relation(fields: [articleId], references: [id])
+  childrens  Comment[] @relation("Comment_Childrens")
+  parent    Comment?  @relation("Comment_Childrens", fields: [parentId], references: [id], onDelete: Cascade)
+  parentId Int?
+  content     String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
