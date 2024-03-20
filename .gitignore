@@ -41,3 +41,5 @@ FEEDBACK.md
 .env.*
 !.env.example
 .env
+
+/database
