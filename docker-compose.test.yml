@@ -1,0 +1,11 @@
+version: "3.8"
+services:
+    database_test:
+        container_name: database_test
+        image: "postgres:13.5"
+        restart: always
+        environment:
+            - POSTGRES_USER=test_user
+            - POSTGRES_PASSWORD=test_pwd
+        ports:
+            - "5433:5432"
